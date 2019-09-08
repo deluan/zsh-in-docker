@@ -1,0 +1,25 @@
+version: "3"
+services:
+  zsh-in-docker-dev:
+    container_name: zsh-in-docker-dev
+    build: .
+
+  test-alpine:
+    image: alpine:latest
+    entrypoint: /bin/sh
+    command: -c "while sleep 1000; do :; done"
+
+  test-ubuntu:
+    image: ubuntu:latest
+    entrypoint: /bin/sh
+    command: -c "while sleep 1000; do :; done"
+
+  test-debian:
+    image: debian:latest
+    entrypoint: /bin/sh
+    command: -c "while sleep 1000; do :; done"
+
+  test-centos:
+    image: centos:latest
+    entrypoint: /bin/sh
+    command: -c "while sleep 1000; do :; done"
