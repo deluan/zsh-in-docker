@@ -14,17 +14,18 @@ test_suite() {
 
     docker-compose up -d test-$image_name
     docker cp zsh-in-docker.sh zsh-in-docker_test-${image_name}_1:/tmp
-    docker exec zsh-in-docker_test-${image_name}_1 sh /tmp/zsh-in-docker.sh \
+    docker exec zsh-in-docker_test-${image_name}_1 sh /tmp/zsh-in-docker.sh "git git-auto-fetch" \
         https://github.com/zsh-users/zsh-autosuggestions \
         https://github.com/zsh-users/zsh-completions
     set +x
 
+    echo
     VERSION=$(docker exec zsh-in-docker_test-${image_name}_1 zsh --version)
-    assert_contain "$VERSION" "zsh 5" "Zsh 5 not installed!"
+    echo "Test: zsh 5 was installed" && assert_contain "$VERSION" "zsh 5" "!"
 
     ZSHRC=$(docker exec zsh-in-docker_test-${image_name}_1 cat /root/.zshrc)
-    assert_contain "$ZSHRC" 'ZSH="/root/.oh-my-zsh"' ".zshrc invalid or not found!"
-    assert_contain "$ZSHRC" 'plugins=( zsh-autosuggestions zsh-completions)' "Plugins not configured"
+    echo "Test: ~/.zshrc was generated" && assert_contain "$ZSHRC" 'ZSH="/root/.oh-my-zsh"' "!"
+    echo "Test: plugins were configured" && assert_contain "$ZSHRC" 'plugins=(git git-auto-fetch zsh-autosuggestions zsh-completions)' "!"
 
     echo
     echo "######### Success! All tests are passing for ${image_name}"

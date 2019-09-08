@@ -57,7 +57,9 @@ bindkey "\$terminfo[kcud1]" history-substring-search-down
 EOM
 }
 
-plugins=$*
+default_plugins=$1
+shift
+git_plugins=$*
 
 install_dependencies
 
@@ -67,8 +69,8 @@ curl -Lo install.sh https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 sh install.sh --unattended
 git clone https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
 
-plugin_list=""
-for plugin in $plugins; do
+plugin_list=$default_plugins
+for plugin in $git_plugins; do
     plugin_name=`basename $plugin`
     plugin_list="$plugin_list $plugin_name"
     git clone $plugin $HOME/.oh-my-zsh/custom/plugins/$plugin_name
