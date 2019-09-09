@@ -11,41 +11,53 @@ extension](https://code.visualstudio.com/docs/remote/containers)
 Add the following lines in your Dockerfile:
 
 ```Dockerfile
-# This line is mandatory
-RUN cd /tmp && wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh
-# This line is customizable (see examples bellow)
-RUN sh /tmp/zsh-in-docker.sh [plugins] [external plugins]
+RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- -t <theme> -p <plugin>
 ```
 
-Where:
+Optional arguments:
 
-- `plugins` is a string containing the bundled plugins that you want to activate. Ex: `"git ssh-agent"`
-- `external plugins` is a list of git repos containing repos of plugins that you want to add
+- `-t <theme>` - Selects the theme to be used. Options are available
+  [here](https://github.com/robbyrussell/oh-my-zsh/wiki/Themes). By default the script installs
+  and uses [Powerlevel10k](https://github.com/romkatv/powerlevel10k), one the
+  "fastest and most awesome" theme for `zsh`. This is the recomended theme, as it is extremely fast
+  for git info updates
+- `-p <plugin>` - Specifies a plugin to be configured in the generated `.zshrc`. Bundled plugins
+  are available [here](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins).
+  If `<plugin>` is a url, the script will try to install the plugin using `git clone`.
 
 Examples:
 
 ```Dockerfile
-# No plugins installed
-RUN sh /tmp/zsh-in-docker.sh
+# Default powerline10k theme, no plugins installed
+RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)"
 ```
 
 ```Dockerfile
-# Install two bundled plugins
-RUN sh /tmp/zsh-in-docker.sh "git ssh-agent"
+# Uses "agnoster" theme, no plugins
+RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+    -t agnoster
 ```
 
 ```Dockerfile
-# Install two bundled plugins + two externals
-RUN sh /tmp/zsh-in-docker.sh "git ssh-agent" \
-    https://github.com/zsh-users/zsh-autosuggestions \
-    https://github.com/zsh-users/zsh-completions
+# Uses "git" and "ssh-agent" bundled plugins
+RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+    -p git -p ssh-agent
 ```
 
 ```Dockerfile
-# Only installs an external plugin
-RUN sh /tmp/zsh-in-docker.sh "" https://github.com/zsh-users/zsh-completions
+# Uses "robbyrussell" theme (original Oh My Zsh theme), uses some bundled plugins and install some more from github
+RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+    -t robbyrussell \
+    -p git \
+    -p ssh-agent \
+    -p https://github.com/zsh-users/zsh-autosuggestions \
+    -p https://github.com/zsh-users/zsh-completions
 ```
 
 ## Notes
 
-As a side-effect, this script also installs `git` and `curl` in your image, if they are not available
+- As a side-effect, this script also installs `git` and `curl` in your image, if they are not
+  available
+- By default this script install the `powerlevel10k` theme, as it is one of the fastest and most
+  customizable themes available for zsh. If you want the default Oh My Zsh theme, uses the option
+  `-t robbyrussell`

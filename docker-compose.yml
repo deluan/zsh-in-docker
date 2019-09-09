@@ -2,7 +2,10 @@ version: "3"
 services:
   zsh-in-docker-dev:
     container_name: zsh-in-docker-dev
-    build: .
+    image: alpine:latest
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace
 
   test-alpine:
     image: alpine:latest

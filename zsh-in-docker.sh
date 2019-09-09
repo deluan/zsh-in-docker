@@ -1,7 +1,34 @@
 #!/bin/sh
 set -e
 
-dist() {
+THEME=powerlevel10k/powerlevel10k
+PLUGINS=""
+
+while getopts ":t:p:" opt; do
+    case ${opt} in
+        t)
+            THEME=$OPTARG
+            ;;
+        p)
+            PLUGINS="${PLUGINS}$OPTARG "
+            ;;
+        \?)
+            echo "Invalid option: $OPTARG" 1>&2
+            ;;
+        :)
+            echo "Invalid option: $OPTARG requires an argument" 1>&2
+            ;;
+    esac
+done
+shift $((OPTIND -1))
+
+echo
+echo "Installing Oh-My-Zsh with:"
+echo "  THEME   = $THEME"
+echo "  PLUGINS = $PLUGINS"
+echo
+
+check_dist() {
     (
         . /etc/os-release
         echo $ID
@@ -9,7 +36,7 @@ dist() {
 }
 
 install_dependencies() {
-    DIST=`dist`
+    DIST=`check_dist`
     echo "###### Installing dependencies for $DIST"
     case $DIST in
         alpine)
@@ -29,7 +56,8 @@ install_dependencies() {
 }
 
 zshrc_template() {
-    _HOME=$1; shift
+    _HOME=$1; 
+    _THEME=$2; shift; shift
     _PLUGINS=$*;
 
     cat <<EOM
@@ -41,13 +69,7 @@ export TERM=xterm
 ##### Zsh/Oh-my-Zsh Configuration
 export ZSH="$_HOME/.oh-my-zsh"
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_last"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir vcs status)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-POWERLEVEL9K_STATUS_OK=false
-POWERLEVEL9K_STATUS_CROSS=true
-
+ZSH_THEME="${_THEME}"
 plugins=($_PLUGINS)
 
 source \$ZSH/oh-my-zsh.sh
@@ -57,23 +79,41 @@ bindkey "\$terminfo[kcud1]" history-substring-search-down
 EOM
 }
 
-default_plugins=$1
-shift
-git_plugins=$*
+powerline10k_config() {
+    cat <<EOM
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_last"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir vcs status)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
+POWERLEVEL9K_STATUS_OK=false
+POWERLEVEL9K_STATUS_CROSS=true
+EOM
+}
 
 install_dependencies
 
 cd /tmp
-trap 'rm -f /tmp/install.sh' EXIT
-curl -Lo install.sh https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
-sh install.sh --unattended
-git clone https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
 
-plugin_list=$default_plugins
-for plugin in $git_plugins; do
-    plugin_name=`basename $plugin`
-    plugin_list="$plugin_list $plugin_name"
-    git clone $plugin $HOME/.oh-my-zsh/custom/plugins/$plugin_name
+if [ ! -d $HOME/.oh-my-zsh ]; then
+    trap 'rm -f /tmp/install.sh' EXIT
+    curl -Lo install.sh https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+    sh install.sh --unattended
+fi
+
+set +x
+plugin_list=""
+for plugin in $PLUGINS; do
+    if [ "`echo $plugin | grep -E '^http.*'`" != "" ]; then
+        plugin_name=`basename $plugin`
+        git clone $plugin $HOME/.oh-my-zsh/custom/plugins/$plugin_name
+    else
+        plugin_name=$plugin
+    fi
+    plugin_list="${plugin_list}$plugin_name "
 done
 
-zshrc_template "$HOME" "$plugin_list" > $HOME/.zshrc
+zshrc_template "$HOME" "$THEME" "$plugin_list" > $HOME/.zshrc
+
+if [ "$THEME" == "powerlevel10k/powerlevel10k" ]; then
+    git clone https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
+    powerline10k_config >> $HOME/.zshrc
+fi
