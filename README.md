@@ -56,8 +56,9 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 
 ## Notes
 
-- As a side-effect, this script also installs `git` and `curl` in your image, if they are not
-  available
+- This scripts install requires `git` and `curl` to work properly. If your `Dockerfile` uses root
+  as the main user, it should be fine. If not, make sure you install the `sudo` package OR
+  `git` and `curl` before calling this script
 - By default this script install the `powerlevel10k` theme, as it is one of the fastest and most
   customizable themes available for zsh. If you want the default Oh My Zsh theme, uses the option
   `-t robbyrussell`

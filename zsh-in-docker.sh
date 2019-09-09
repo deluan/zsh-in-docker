@@ -38,20 +38,35 @@ check_dist() {
 install_dependencies() {
     DIST=`check_dist`
     echo "###### Installing dependencies for $DIST"
+
+    if [ "`id -u`" = "0" ]; then
+        Sudo=''
+    elif which sudo; then
+        Sudo='sudo'
+    else
+        echo "WARNING: 'sudo' command not found. Skipping the installation of dependencies. "
+        echo "If this fails, you need to do one of these options:"
+        echo "   1) Install 'sudo' before calling this script"
+        echo "OR"
+        echo "   2) Install the required dependencies: git curl zsh"
+        return
+    fi
+
     case $DIST in
         alpine)
-            apk add --update --no-cache git curl zsh
+            $Sudo apk add --update --no-cache git curl zsh
         ;;
         centos)
-            yum update
-            yum install -y git curl
-            curl http://mirror.ghettoforge.org/distributions/gf/el/7/plus/x86_64/zsh-5.1-1.gf.el7.x86_64.rpm > zsh-5.1-1.gf.el7.x86_64.rpm
-            rpm -i zsh-5.1-1.gf.el7.x86_64.rpm
+            $Sudo yum update
+            $Sudo yum install -y git curl
+            $Sudo curl http://mirror.ghettoforge.org/distributions/gf/el/7/plus/x86_64/zsh-5.1-1.gf.el7.x86_64.rpm > zsh-5.1-1.gf.el7.x86_64.rpm
+            $Sudo rpm -i zsh-5.1-1.gf.el7.x86_64.rpm
+            $Sudo rm zsh-5.1-1.gf.el7.x86_64.rpm
         ;;
         *)
-            apt-get update
-            apt-get -y install git curl zsh locales locales-all
-            locale-gen en_US.UTF-8
+            $Sudo apt-get update
+            $Sudo apt-get -y install git curl zsh locales locales-all
+            $Sudo locale-gen en_US.UTF-8
     esac
 }
 
@@ -94,12 +109,9 @@ install_dependencies
 cd /tmp
 
 if [ ! -d $HOME/.oh-my-zsh ]; then
-    trap 'rm -f /tmp/install.sh' EXIT
-    curl -Lo install.sh https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
-    sh install.sh --unattended
+    sh -c "$(curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" --unattended
 fi
 
-set +x
 plugin_list=""
 for plugin in $PLUGINS; do
     if [ "`echo $plugin | grep -E '^http.*'`" != "" ]; then
@@ -113,7 +125,7 @@ done
 
 zshrc_template "$HOME" "$THEME" "$plugin_list" > $HOME/.zshrc
 
-if [ "$THEME" == "powerlevel10k/powerlevel10k" ]; then
+if [ "$THEME" = "powerlevel10k/powerlevel10k" ]; then
     git clone https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
     powerline10k_config >> $HOME/.zshrc
 fi
