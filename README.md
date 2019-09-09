@@ -8,7 +8,7 @@ extension](https://code.visualstudio.com/docs/remote/containers)
 
 ## Usage
 
-One line installation: add the following line in your Dockerfile:
+One line installation: add the following line in your `Dockerfile`:
 
 ```Dockerfile
 # Default powerline10k theme, no plugins installed
@@ -20,7 +20,7 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 - `-t <theme>` - Selects the theme to be used. Options are available
   [here](https://github.com/robbyrussell/oh-my-zsh/wiki/Themes). By default the script installs
   and uses [Powerlevel10k](https://github.com/romkatv/powerlevel10k), one the
-  "fastest and most awesome" theme for `zsh`. This is the recomended theme, as it is extremely fast
+  "fastest and most awesome" themes for `zsh`. This is the recomended theme, as it is extremely fast
   for git info updates
 - `-p <plugin>` - Specifies a plugin to be configured in the generated `.zshrc`. List of bundled
   Oh My Zsh plugins are available [here](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins).
@@ -29,9 +29,9 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 #### Examples:
 
 ```Dockerfile
-# Uses "agnoster" theme, no plugins
+# Uses "robbyrussell" theme (original Oh My Zsh theme), with no plugins
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
-    -t agnoster
+    -t robbyrussell
 ```
 
 ```Dockerfile
@@ -41,9 +41,9 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 ```
 
 ```Dockerfile
-# Uses "robbyrussell" theme (original Oh My Zsh theme), uses some bundled plugins and install some more from github
+# Uses "agnoster" theme, uses some bundled plugins and install some more from github
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
-    -t robbyrussell \
+    -t agnoster \
     -p git \
     -p ssh-agent \
     -p https://github.com/zsh-users/zsh-autosuggestions \
