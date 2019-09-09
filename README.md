@@ -11,7 +11,7 @@ extension](https://code.visualstudio.com/docs/remote/containers)
 Add the following lines in your Dockerfile:
 
 ```Dockerfile
-RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- -t <theme> -p <plugin>
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- -t <theme> -p <plugin>
 ```
 
 Optional arguments:
@@ -29,24 +29,24 @@ Examples:
 
 ```Dockerfile
 # Default powerline10k theme, no plugins installed
-RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)"
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)"
 ```
 
 ```Dockerfile
 # Uses "agnoster" theme, no plugins
-RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
     -t agnoster
 ```
 
 ```Dockerfile
 # Uses "git" and "ssh-agent" bundled plugins
-RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
     -p git -p ssh-agent
 ```
 
 ```Dockerfile
 # Uses "robbyrussell" theme (original Oh My Zsh theme), uses some bundled plugins and install some more from github
-RUN sh "$(wget https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
     -t robbyrussell \
     -p git \
     -p ssh-agent \
