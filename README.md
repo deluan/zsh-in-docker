@@ -8,29 +8,25 @@ extension](https://code.visualstudio.com/docs/remote/containers)
 
 ## Usage
 
-Add the following lines in your Dockerfile:
+One line installation: add the following line in your Dockerfile:
 
 ```Dockerfile
-RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- -t <theme> -p <plugin>
+# Default powerline10k theme, no plugins installed
+RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)"
 ```
 
-Optional arguments:
+#### Optional arguments:
 
 - `-t <theme>` - Selects the theme to be used. Options are available
   [here](https://github.com/robbyrussell/oh-my-zsh/wiki/Themes). By default the script installs
   and uses [Powerlevel10k](https://github.com/romkatv/powerlevel10k), one the
   "fastest and most awesome" theme for `zsh`. This is the recomended theme, as it is extremely fast
   for git info updates
-- `-p <plugin>` - Specifies a plugin to be configured in the generated `.zshrc`. Bundled plugins
-  are available [here](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins).
+- `-p <plugin>` - Specifies a plugin to be configured in the generated `.zshrc`. List of bundled
+  Oh My Zsh plugins are available [here](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins).
   If `<plugin>` is a url, the script will try to install the plugin using `git clone`.
 
-Examples:
-
-```Dockerfile
-# Default powerline10k theme, no plugins installed
-RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)"
-```
+#### Examples:
 
 ```Dockerfile
 # Uses "agnoster" theme, no plugins
@@ -56,9 +52,11 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 
 ## Notes
 
-- This scripts install requires `git` and `curl` to work properly. If your `Dockerfile` uses root
-  as the main user, it should be fine. If not, make sure you install the `sudo` package OR
-  `git` and `curl` before calling this script
+- The examples above use `wget`, but if you prefer `curl`, just replace `wget -O-` with `curl`
+- This scripts requires `git` and `curl` to work properly. If your `Dockerfile` uses `root` as the
+  main user, it should be fine, as the script will install them automatically. If you are using a
+  non-root user, make sure to install the `sudo` package _OR_ to install `git` and `curl` packages
+  _before_ calling this script
 - By default this script install the `powerlevel10k` theme, as it is one of the fastest and most
   customizable themes available for zsh. If you want the default Oh My Zsh theme, uses the option
   `-t robbyrussell`
