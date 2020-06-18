@@ -24,5 +24,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Test in Debian
-      run: ./test.sh debian
-      
+      run: ./test.sh debian      
+  test-amazonlinux:
+    runs-on: amazonlinux-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Test in Amazonlinux
+      run: ./test.sh amazonlinux
