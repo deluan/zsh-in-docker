@@ -32,7 +32,7 @@ jobs:
       - name: Test in Debian
         run: ./test.sh debian
   test-amazonlinux:
-    runs-on: amazonlinux-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: Test in Amazonlinux
