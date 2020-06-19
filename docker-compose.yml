@@ -22,6 +22,11 @@ services:
     entrypoint: /bin/sh
     command: -c "while sleep 1000; do :; done"
 
+  test-amazonlinux:
+    image: amazonlinux:latest
+    entrypoint: /bin/sh
+    command: -c "while sleep 1000; do :; done"
+
   test-centos:
     image: centos:latest
     entrypoint: /bin/sh
