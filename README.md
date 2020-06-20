@@ -1,10 +1,11 @@
 # Oh My Zsh Installer for Docker
 
 This is a script to automate [Oh My Zsh](https://ohmyz.sh/) installation in development containers.
-Works with any images based on Alpine, Ubuntu, Debian or CentOS.
+Works with any images based on Alpine, Ubuntu, Debian, CentOS or Amazon Linux.
 
-The goal is to simplify installing zsh in a Docker image for use with [VSCode's Remote Conteiners
-extension](https://code.visualstudio.com/docs/remote/containers)
+The original goal was to simplify setting up `zsh` and Oh My Zsh in a Docker image for use with [VSCode's Remote Conteiners
+extension](https://code.visualstudio.com/docs/remote/containers), but it can be used in any case you
+need a simple way to install Oh My Zsh and its plugins in a Docker image
 
 ## Usage
 
