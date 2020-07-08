@@ -61,3 +61,7 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 - By default this script install the `powerlevel10k` theme, as it is one of the fastest and most
   customizable themes available for zsh. If you want the default Oh My Zsh theme, uses the option
   `-t robbyrussell`
+  
+## Liked it?
+
+If you like this script, feel free to thank me with a [coffee (or beer ;) )](https://ko-fi.com/K3K21VMDV)
