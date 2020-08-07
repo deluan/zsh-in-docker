@@ -36,8 +36,16 @@ check_dist() {
     )
 }
 
+check_version() {
+    (
+        . /etc/os-release
+        echo $VERSION_ID
+    )
+}
+
 install_dependencies() {
     DIST=`check_dist`
+    VERSION=`check_version`
     echo "###### Installing dependencies for $DIST"
 
     if [ "`id -u`" = "0" ]; then
@@ -67,7 +75,10 @@ install_dependencies() {
         ;;
         *)
             $Sudo apt-get update
-            $Sudo apt-get -y install git curl zsh locales locales-all
+            $Sudo apt-get -y install git curl zsh locales
+            if [ "$VERSION" != "14.04" ]; then
+                $Sudo apt-get -y install locales-all
+            fi
             $Sudo locale-gen en_US.UTF-8
     esac
 }
