@@ -18,7 +18,9 @@ test_suite() {
         -t agnoster \
         -p git -p git-auto-fetch \
         -p https://github.com/zsh-users/zsh-autosuggestions \
-        -p https://github.com/zsh-users/zsh-completions
+        -p https://github.com/zsh-users/zsh-completions \
+        -a 'CASE_SENSITIVE="true"' \
+        -a 'HYPHEN_INSENSITIVE="true"'
     set +x
 
     echo
@@ -31,6 +33,7 @@ test_suite() {
     echo "Test: ~/.zshrc was generated" && assert_contain "$ZSHRC" 'ZSH="/root/.oh-my-zsh"' "!"
     echo "Test: theme was configured" && assert_contain "$ZSHRC" 'ZSH_THEME="agnoster"' "!"
     echo "Test: plugins were configured" && assert_contain "$ZSHRC" 'plugins=(git git-auto-fetch zsh-autosuggestions zsh-completions )' "!"
+    echo "Test: lines are appended to ~/.zshrc" && assert_contain "$ZSHRC" 'CASE_SENSITIVE="true"' "!" && assert_contain "$ZSHRC" 'HYPHEN_INSENSITIVE="true"' "!"
 
     echo
     echo "######### Success! All tests are passing for ${image_name}"

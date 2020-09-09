@@ -26,6 +26,11 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 - `-p <plugin>` - Specifies a plugin to be configured in the generated `.zshrc`. List of bundled
   Oh My Zsh plugins are available [here](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins).
   If `<plugin>` is a url, the script will try to install the plugin using `git clone`.
+- `-a <line>` - You can add extra lines at the end of the generated `.zshrc` by passing one `-a` argument for
+  each line you want to add. Ex: if you want to enable [case sensitive completion](https://stackoverflow.com/a/28021691):
+  ```
+  RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -a 'CASE_SENSITIVE="true"'
+  ```
 
 #### Examples:
 
@@ -36,9 +41,12 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 ```
 
 ```Dockerfile
-# Uses "git" and "ssh-agent" bundled plugins
+# Uses "git", "ssh-agent" and "history-substring-search" bundled plugins
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
-    -p git -p ssh-agent
+    -p git -p ssh-agent -p 'history-substring-search' \
+    -a 'bindkey "\$terminfo[kcuu1]" history-substring-search-up' \
+    -a 'bindkey "\$terminfo[kcud1]" history-substring-search-down'
+
 ```
 
 ```Dockerfile

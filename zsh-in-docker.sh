@@ -3,14 +3,15 @@ set -e
 
 THEME=powerlevel10k/powerlevel10k
 PLUGINS=""
+ZSHRC_APPEND=""
 
-while getopts ":t:p:" opt; do
+while getopts ":t:p:a:" opt; do
     case ${opt} in
-        t)
-            THEME=$OPTARG
+        t)  THEME=$OPTARG
             ;;
-        p)
-            PLUGINS="${PLUGINS}$OPTARG "
+        p)  PLUGINS="${PLUGINS}$OPTARG "
+            ;;
+        a)  ZSHRC_APPEND="$ZSHRC_APPEND\n$OPTARG"
             ;;
         \?)
             echo "Invalid option: $OPTARG" 1>&2
@@ -89,10 +90,8 @@ ZSH_THEME="${_THEME}"
 plugins=($_PLUGINS)
 
 source \$ZSH/oh-my-zsh.sh
-
-bindkey "\$terminfo[kcuu1]" history-substring-search-up
-bindkey "\$terminfo[kcud1]" history-substring-search-down
 EOM
+    echo $ZSHRC_APPEND
 }
 
 powerline10k_config() {
