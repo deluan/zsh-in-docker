@@ -29,9 +29,11 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
   Oh My Zsh plugins are available [here](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins).
   If `<plugin>` is a url, the script will try to install the plugin using `git clone`.
 - `-a <line>` - You can add extra lines at the end of the generated `.zshrc` by passing one `-a` argument for
-  each line you want to add. Ex: if you want to enable [case sensitive completion](https://stackoverflow.com/a/28021691):
-  ```
-  RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -a 'CASE_SENSITIVE="true"'
+  each line you want to add. For example, if you want to enable [case sensitive completion](https://stackoverflow.com/a/28021691):
+  
+  ```Dockerfile
+  RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+  -a 'CASE_SENSITIVE="true"'
   ```
 
 #### Examples:
@@ -74,4 +76,4 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
   
 ## Liked it?
 
-If you like this script, feel free to thank me with a [coffee (or beer ;) )](https://ko-fi.com/K3K21VMDV)
+If you like this script, feel free to thank me with a [coffee (or beer :wink:)](https://ko-fi.com/K3K21VMDV)
