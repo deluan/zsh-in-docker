@@ -1,3 +1,5 @@
+# This is only used for developing the zsh-in-docker script, but can be used as an example.
+
 FROM debian:latest
 
 ARG USERNAME=vscode
