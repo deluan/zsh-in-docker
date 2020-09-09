@@ -71,7 +71,7 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
   non-root user, make sure to install the `sudo` package _OR_ to install `git` and `curl` packages
   _before_ calling this script
 - By default this script install the `powerlevel10k` theme, as it is one of the fastest and most
-  customizable themes available for zsh. If you want the default Oh My Zsh theme, uses the option
+  customizable themes available for zsh. If you want the default Oh My Zsh theme, use the option
   `-t robbyrussell`
   
 ## Liked it?
