@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Test in Ubuntu
+      - name: Test in Ubuntu 14.04
         run: ./test.sh ubuntu-14.04      
   test-alpine:
     runs-on: ubuntu-latest
