@@ -33,7 +33,9 @@ test_suite() {
     echo "Test: ~/.zshrc was generated" && assert_contain "$ZSHRC" 'ZSH="/root/.oh-my-zsh"' "!"
     echo "Test: theme was configured" && assert_contain "$ZSHRC" 'ZSH_THEME="agnoster"' "!"
     echo "Test: plugins were configured" && assert_contain "$ZSHRC" 'plugins=(git git-auto-fetch zsh-autosuggestions zsh-completions )' "!"
-    echo "Test: lines are appended to ~/.zshrc" && assert_contain "$ZSHRC" 'CASE_SENSITIVE="true"' "!" && assert_contain "$ZSHRC" 'HYPHEN_INSENSITIVE="true"' "!"
+    echo "Test: line 1 is appended to ~/.zshrc" && assert_contain "$ZSHRC" 'CASE_SENSITIVE="true"' "!"
+    echo "Test: line 2 is appended to ~/.zshrc" && assert_contain "$ZSHRC" 'HYPHEN_INSENSITIVE="true"' "!"
+    echo "Test: newline is expanded when append lines" && assert_not_contain "$ZSHRC" '\nCASE_SENSITIVE="true"' "!"
 
     echo
     echo "######### Success! All tests are passing for ${image_name}"

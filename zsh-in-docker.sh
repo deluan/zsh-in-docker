@@ -102,7 +102,7 @@ plugins=($_PLUGINS)
 
 source \$ZSH/oh-my-zsh.sh
 EOM
-    echo $ZSHRC_APPEND
+    printf $ZSHRC_APPEND
 }
 
 powerline10k_config() {
@@ -119,10 +119,12 @@ install_dependencies
 
 cd /tmp
 
+# Install On-My-Zsh
 if [ ! -d $HOME/.oh-my-zsh ]; then
     sh -c "$(curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" --unattended
 fi
 
+# Generate plugin list
 plugin_list=""
 for plugin in $PLUGINS; do
     if [ "`echo $plugin | grep -E '^http.*'`" != "" ]; then
@@ -134,8 +136,10 @@ for plugin in $PLUGINS; do
     plugin_list="${plugin_list}$plugin_name "
 done
 
+# Generate .zshrc
 zshrc_template "$HOME" "$THEME" "$plugin_list" > $HOME/.zshrc
 
+# Install powerlevel10k if not other theme were specified
 if [ "$THEME" = "powerlevel10k/powerlevel10k" ]; then
     git clone https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
     powerline10k_config >> $HOME/.zshrc
