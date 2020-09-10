@@ -13,6 +13,12 @@ jobs:
       - uses: actions/checkout@v1
       - name: Test in Ubuntu
         run: ./test.sh ubuntu
+  test-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Test in Ubuntu
+        run: ./test.sh ubuntu-14.04      
   test-alpine:
     runs-on: ubuntu-latest
     steps:
