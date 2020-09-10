@@ -102,7 +102,7 @@ plugins=($_PLUGINS)
 
 source \$ZSH/oh-my-zsh.sh
 EOM
-    printf $ZSHRC_APPEND
+    printf "$ZSHRC_APPEND"
 }
 
 powerline10k_config() {
