@@ -1,6 +1,8 @@
 # Oh My Zsh Installer for Docker
 
+[![Last Release](https://img.shields.io/github/v/release/deluan/zsh-in-docker?label=latest&style=flat-square)](https://github.com/deluan/zsh-in-docker/releases)
 [![Build](https://img.shields.io/github/workflow/status/deluan/zsh-in-docker/CI?style=flat-square)](https://github.com/deluan/zsh-in-docker/actions)
+
 
 This is a script to automate [Oh My Zsh](https://ohmyz.sh/) installation in development containers.
 Works with any images based on Alpine, Ubuntu, Debian, CentOS or Amazon Linux.
@@ -76,4 +78,6 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   
 ## Liked it?
 
-If you like this script, feel free to thank me with a [coffee (or beer :wink:)](https://ko-fi.com/K3K21VMDV)
+If you like this script, feel free to thank me with a coffee (or beer :wink:):
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K21VMDV)
