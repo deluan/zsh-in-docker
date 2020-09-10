@@ -21,7 +21,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 USER $USERNAME
 
 COPY zsh-in-docker.sh /tmp
-# RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.1/zsh-in-docker.sh)" -- \
+# RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.2/zsh-in-docker.sh)" -- \
 RUN sh -c "$(cat /tmp/zsh-in-docker.sh)" -- \
     -p git \
     -p https://github.com/zsh-users/zsh-autosuggestions \
