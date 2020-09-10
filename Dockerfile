@@ -9,7 +9,7 @@ ARG USER_GID=$USER_UID
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
     && apt-get update \
-    && apt-get install -y sudo \
+    && apt-get install -y sudo wget \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME \
     #
@@ -21,7 +21,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 USER $USERNAME
 
 COPY zsh-in-docker.sh /tmp
-# RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+# RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.0/zsh-in-docker.sh)" -- \
 RUN sh -c "$(cat /tmp/zsh-in-docker.sh)" -- \
     -p git \
     -p https://github.com/zsh-users/zsh-autosuggestions \

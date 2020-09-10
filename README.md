@@ -15,7 +15,7 @@ One line installation: add the following line in your `Dockerfile`:
 
 ```Dockerfile
 # Default powerline10k theme, no plugins installed
-RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)"
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.0/zsh-in-docker.sh)"
 ```
 
 #### Optional arguments:
@@ -32,7 +32,7 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
   each line you want to add. For example, if you want to enable [case sensitive completion](https://stackoverflow.com/a/28021691):
   
   ```Dockerfile
-  RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+  RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.0/zsh-in-docker.sh)" -- \
   -a 'CASE_SENSITIVE="true"'
   ```
 
@@ -40,13 +40,13 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 
 ```Dockerfile
 # Uses "robbyrussell" theme (original Oh My Zsh theme), with no plugins
-RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.0/zsh-in-docker.sh)" -- \
     -t robbyrussell
 ```
 
 ```Dockerfile
 # Uses "git", "ssh-agent" and "history-substring-search" bundled plugins
-RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.0/zsh-in-docker.sh)" -- \
     -p git -p ssh-agent -p 'history-substring-search' \
     -a 'bindkey "\$terminfo[kcuu1]" history-substring-search-up' \
     -a 'bindkey "\$terminfo[kcud1]" history-substring-search-down'
@@ -55,7 +55,7 @@ RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/mas
 
 ```Dockerfile
 # Uses "agnoster" theme, uses some bundled plugins and install some more from github
-RUN sh -c "$(wget -O- https://raw.githubusercontent.com/deluan/zsh-in-docker/master/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.0/zsh-in-docker.sh)" -- \
     -t agnoster \
     -p git \
     -p ssh-agent \
