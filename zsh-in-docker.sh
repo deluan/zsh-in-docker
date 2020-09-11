@@ -100,9 +100,9 @@ export ZSH="$_HOME/.oh-my-zsh"
 ZSH_THEME="${_THEME}"
 plugins=($_PLUGINS)
 
-source \$ZSH/oh-my-zsh.sh
 EOM
     printf "$ZSHRC_APPEND"
+    printf "\nsource \$ZSH/oh-my-zsh.sh"
 }
 
 powerline10k_config() {
@@ -135,6 +135,16 @@ for plugin in $PLUGINS; do
     fi
     plugin_list="${plugin_list}$plugin_name "
 done
+
+# Handle themes
+if [ "`echo $THEME | grep -E '^http.*'`" != "" ]; then
+    theme_repo=`basename $THEME`
+    THEME_DIR="$HOME/.oh-my-zsh/custom/themes/$theme_repo"
+    git clone $THEME $THEME_DIR
+    theme_name=`cd $THEME_DIR; ls *.zsh-theme | head -1` 
+    theme_name="${theme_name%.zsh-theme}"
+    THEME="$theme_repo/$theme_name"
+fi
 
 # Generate .zshrc
 zshrc_template "$HOME" "$THEME" "$plugin_list" > $HOME/.zshrc

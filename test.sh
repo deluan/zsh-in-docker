@@ -15,7 +15,7 @@ test_suite() {
     docker-compose up -d test-$image_name
     docker cp zsh-in-docker.sh zsh-in-docker_test-${image_name}_1:/tmp
     docker exec zsh-in-docker_test-${image_name}_1 sh /tmp/zsh-in-docker.sh \
-        -t agnoster \
+        -t https://github.com/denysdovhan/spaceship-prompt \
         -p git -p git-auto-fetch \
         -p https://github.com/zsh-users/zsh-autosuggestions \
         -p https://github.com/zsh-users/zsh-completions \
@@ -31,7 +31,7 @@ test_suite() {
     echo "########################################################################################"
     echo "Test: zsh 5 was installed" && assert_contain "$VERSION" "zsh 5" "!"
     echo "Test: ~/.zshrc was generated" && assert_contain "$ZSHRC" 'ZSH="/root/.oh-my-zsh"' "!"
-    echo "Test: theme was configured" && assert_contain "$ZSHRC" 'ZSH_THEME="agnoster"' "!"
+    echo "Test: theme was configured" && assert_contain "$ZSHRC" 'ZSH_THEME="spaceship-prompt/spaceship"' "!"
     echo "Test: plugins were configured" && assert_contain "$ZSHRC" 'plugins=(git git-auto-fetch zsh-autosuggestions zsh-completions )' "!"
     echo "Test: line 1 is appended to ~/.zshrc" && assert_contain "$ZSHRC" 'CASE_SENSITIVE="true"' "!"
     echo "Test: line 2 is appended to ~/.zshrc" && assert_contain "$ZSHRC" 'HYPHEN_INSENSITIVE="true"' "!"
