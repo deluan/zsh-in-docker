@@ -17,7 +17,7 @@ One line installation: add the following line in your `Dockerfile`:
 
 ```Dockerfile
 # Default powerline10k theme, no plugins installed
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.2/zsh-in-docker.sh)"
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.0/zsh-in-docker.sh)"
 ```
 
 #### Optional arguments:
@@ -25,16 +25,17 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 - `-t <theme>` - Selects the theme to be used. Options are available
   [here](https://github.com/robbyrussell/oh-my-zsh/wiki/Themes). By default the script installs
   and uses [Powerlevel10k](https://github.com/romkatv/powerlevel10k), one the
-  "fastest and most awesome" themes for `zsh`. This is the recomended theme, as it is extremely fast
-  for git info updates
+  "fastest and most awesome" themes for `zsh`. This is the recommended theme, as it is extremely fast
+  for git info updates. If `<theme>` is a url, the script will try to install the theme using `git clone`.
 - `-p <plugin>` - Specifies a plugin to be configured in the generated `.zshrc`. List of bundled
   Oh My Zsh plugins are available [here](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins).
   If `<plugin>` is a url, the script will try to install the plugin using `git clone`.
-- `-a <line>` - You can add extra lines at the end of the generated `.zshrc` by passing one `-a` argument for
-  each line you want to add. For example, if you want to enable [case sensitive completion](https://stackoverflow.com/a/28021691):
+- `-a <line>` - You can add extra lines at the end of the generated `.zshrc` (but before loading oh-my-zsh) by 
+  passing one `-a` argument for each line you want to add. This is useful to customize plugins or themes. 
+  For example, if you want to enable [case sensitive completion](https://stackoverflow.com/a/28021691):
   
   ```Dockerfile
-  RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.2/zsh-in-docker.sh)" -- \
+  RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.0/zsh-in-docker.sh)" -- \
   -a 'CASE_SENSITIVE="true"'
   ```
 
@@ -42,13 +43,13 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 ```Dockerfile
 # Uses "robbyrussell" theme (original Oh My Zsh theme), with no plugins
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.2/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.0/zsh-in-docker.sh)" -- \
     -t robbyrussell
 ```
 
 ```Dockerfile
 # Uses "git", "ssh-agent" and "history-substring-search" bundled plugins
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.2/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.0/zsh-in-docker.sh)" -- \
     -p git -p ssh-agent -p 'history-substring-search' \
     -a 'bindkey "\$terminfo[kcuu1]" history-substring-search-up' \
     -a 'bindkey "\$terminfo[kcud1]" history-substring-search-down'
@@ -56,9 +57,11 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 ```
 
 ```Dockerfile
-# Uses "agnoster" theme, uses some bundled plugins and install some more from github
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.2/zsh-in-docker.sh)" -- \
-    -t agnoster \
+# Uses "Spaceship" theme with some customization. Uses some bundled plugins and installs some more from github
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.0/zsh-in-docker.sh)" -- \
+    -t https://github.com/denysdovhan/spaceship-prompt \
+    -a 'SPACESHIP_PROMPT_ADD_NEWLINE="false"' \
+    -a 'SPACESHIP_PROMPT_SEPARATE_LINE="false"' \
     -p git \
     -p ssh-agent \
     -p https://github.com/zsh-users/zsh-autosuggestions \

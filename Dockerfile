@@ -20,7 +20,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 USER $USERNAME
 
-# RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.0.2/zsh-in-docker.sh)" -- \
+# RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.0/zsh-in-docker.sh)" -- \
 COPY zsh-in-docker.sh /tmp
 RUN /tmp/zsh-in-docker.sh \
     -t https://github.com/denysdovhan/spaceship-prompt \
