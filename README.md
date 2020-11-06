@@ -8,8 +8,8 @@
 This is a script to automate [Oh My Zsh](https://ohmyz.sh/) installation in development containers.
 Works with any images based on Alpine, Ubuntu, Debian, CentOS or Amazon Linux.
 
-The original goal was to simplify setting up `zsh` and Oh My Zsh in a Docker image for use with [VSCode's Remote Conteiners
-extension](https://code.visualstudio.com/docs/remote/containers), but it can be used in any case you
+The original goal was to simplify setting up `zsh` and Oh My Zsh in a Docker image for use with [VSCode's Remote Containers
+extension](https://code.visualstudio.com/docs/remote/containers), but it can be used whenever you
 need a simple way to install Oh My Zsh and its plugins in a Docker image
 
 ## Usage
@@ -25,9 +25,8 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 - `-t <theme>` - Selects the theme to be used. Options are available
   [here](https://github.com/robbyrussell/oh-my-zsh/wiki/Themes). By default the script installs
-  and uses [Powerlevel10k](https://github.com/romkatv/powerlevel10k), one the
-  "fastest and most awesome" themes for `zsh`. This is the recommended theme, as it is extremely fast
-  for git info updates. If `<theme>` is a url, the script will try to install the theme using `git clone`.
+  and uses [Powerlevel10k](https://github.com/romkatv/powerlevel10k), one of the
+  "fastest and most awesome" themes for `zsh`. This is my recommended theme. If `<theme>` is a url, the script will try to install the theme using `git clone`.
 - `-p <plugin>` - Specifies a plugin to be configured in the generated `.zshrc`. List of bundled
   Oh My Zsh plugins are available [here](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins).
   If `<plugin>` is a url, the script will try to install the plugin using `git clone`.
@@ -76,12 +75,12 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   main user, it should be fine, as the script will install them automatically. If you are using a
   non-root user, make sure to install the `sudo` package _OR_ to install `git` and `curl` packages
   _before_ calling this script
-- By default this script install the `powerlevel10k` theme, as it is one of the fastest and most
+- By default this script will install the `powerlevel10k` theme, as it is one of the fastest and most
   customizable themes available for zsh. If you want the default Oh My Zsh theme, use the option
   `-t robbyrussell`
   
 ## Liked it?
 
-If you like this script, feel free to thank me with a coffee (or beer :wink:):
+If you like this script, feel free to thank me with a coffee (or a beer :wink:):
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K21VMDV)
