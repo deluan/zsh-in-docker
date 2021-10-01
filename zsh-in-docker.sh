@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-THEME=powerlevel10k/powerlevel10k
+THEME=default
 PLUGINS=""
 ZSHRC_APPEND=""
 
@@ -68,7 +68,7 @@ install_dependencies() {
         centos | amzn)
             $Sudo yum update -y
             $Sudo yum install -y git curl
-            $Sudo yum install -y ncurses-compat-libs # this is required for AMZN Linux (ref: https://github.com/emqx/emqx/issues/2503) 
+            $Sudo yum install -y ncurses-compat-libs # this is required for AMZN Linux (ref: https://github.com/emqx/emqx/issues/2503)
             $Sudo curl http://mirror.ghettoforge.org/distributions/gf/el/7/plus/x86_64/zsh-5.1-1.gf.el7.x86_64.rpm > zsh-5.1-1.gf.el7.x86_64.rpm
             $Sudo rpm -i zsh-5.1-1.gf.el7.x86_64.rpm
             $Sudo rm zsh-5.1-1.gf.el7.x86_64.rpm
@@ -84,7 +84,7 @@ install_dependencies() {
 }
 
 zshrc_template() {
-    _HOME=$1; 
+    _HOME=$1;
     _THEME=$2; shift; shift
     _PLUGINS=$*;
 
@@ -141,7 +141,7 @@ if [ "`echo $THEME | grep -E '^http.*'`" != "" ]; then
     theme_repo=`basename $THEME`
     THEME_DIR="$HOME/.oh-my-zsh/custom/themes/$theme_repo"
     git clone $THEME $THEME_DIR
-    theme_name=`cd $THEME_DIR; ls *.zsh-theme | head -1` 
+    theme_name=`cd $THEME_DIR; ls *.zsh-theme | head -1`
     theme_name="${theme_name%.zsh-theme}"
     THEME="$theme_repo/$theme_name"
 fi
@@ -150,7 +150,7 @@ fi
 zshrc_template "$HOME" "$THEME" "$plugin_list" > $HOME/.zshrc
 
 # Install powerlevel10k if no other theme was specified
-if [ "$THEME" = "powerlevel10k/powerlevel10k" ]; then
+if [ "$THEME" = "default" ]; then
     git clone https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
     powerline10k_config >> $HOME/.zshrc
 fi
