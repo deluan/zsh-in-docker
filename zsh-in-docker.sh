@@ -88,6 +88,10 @@ zshrc_template() {
     _THEME=$2; shift; shift
     _PLUGINS=$*;
 
+    if _THEME=default; then
+        _THEME="powerlevel10k/powerlevel10k"
+    fi
+
     cat <<EOM
 export LANG='en_US.UTF-8'
 export LANGUAGE='en_US:en'
