@@ -88,7 +88,7 @@ zshrc_template() {
     _THEME=$2; shift; shift
     _PLUGINS=$*;
 
-    if _THEME=default; then
+    if [ "$_THEME" = "default" ]; then
         _THEME="powerlevel10k/powerlevel10k"
     fi
 
