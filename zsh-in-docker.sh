@@ -51,7 +51,11 @@ install_dependencies() {
     if [ "`id -u`" = "0" ]; then
         Sudo=''
     elif which sudo; then
-        Sudo="echo $SUDO_PWD | sudo -S "
+        if [[ ! -z "$SUDO_PASSWORD" ]]; then
+            Sudo="echo $SUDO_PASSWORD | sudo -S "
+        else
+            Sudo="sudo"
+        fi
     else
         echo "WARNING: 'sudo' command not found. Skipping the installation of dependencies. "
         echo "If this fails, you need to do one of these options:"
