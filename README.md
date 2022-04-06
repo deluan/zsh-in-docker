@@ -70,7 +70,7 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 ## Notes
 
-- The examples above use `wget`, but if you prefer `curl`, just replace `wget -O-` with `curl`
+- The examples above use `wget`, but if you prefer `curl`, just replace `wget -O-` with `curl -L`
 - This scripts requires `git` and `curl` to work properly. If your `Dockerfile` uses `root` as the
   main user, it should be fine, as the script will install them automatically. If you are using a
   non-root user, make sure to install the `sudo` package _OR_ to install `git` and `curl` packages
