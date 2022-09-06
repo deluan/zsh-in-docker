@@ -65,7 +65,7 @@ install_dependencies() {
         alpine)
             $Sudo apk add --update --no-cache git curl zsh
         ;;
-        centos | amzn)
+        rocky | centos | amzn)
             $Sudo yum update -y
             $Sudo yum install -y git curl
             $Sudo yum install -y ncurses-compat-libs # this is required for AMZN Linux (ref: https://github.com/emqx/emqx/issues/2503)
