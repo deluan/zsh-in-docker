@@ -125,7 +125,7 @@ cd /tmp
 
 # Install On-My-Zsh
 if [ ! -d $HOME/.oh-my-zsh ]; then
-    sh -c "$(curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" --unattended
+    sh -c "$(curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
 fi
 
 # Generate plugin list
