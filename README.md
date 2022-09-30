@@ -74,7 +74,8 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 - This scripts requires `git` and `curl` to work properly. If your `Dockerfile` uses `root` as the
   main user, it should be fine, as the script will install them automatically. If you are using a
   non-root user, make sure to install the `sudo` package _OR_ to install `git` and `curl` packages
-  _before_ calling this script
+  _before_ calling this script. In case `sudo` access is an issue and you already have `git` and
+  `curl`, you can use the option `-x` to skip the installations.
 - By default this script will install the `powerlevel10k` theme, as it is one of the fastest and most
   customizable themes available for zsh. If you want the default Oh My Zsh theme, use the option
   `-t robbyrussell`
