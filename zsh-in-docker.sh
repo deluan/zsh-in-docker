@@ -119,7 +119,7 @@ POWERLEVEL9K_STATUS_CROSS=true
 EOM
 }
 
-install_dependencies
+# install_dependencies
 
 cd /tmp
 
