@@ -32,23 +32,23 @@ echo
 check_dist() {
     (
         . /etc/os-release
-        echo $ID
+        echo "$ID"
     )
 }
 
 check_version() {
     (
         . /etc/os-release
-        echo $VERSION_ID
+        echo "$VERSION_ID"
     )
 }
 
 install_dependencies() {
-    DIST=`check_dist`
-    VERSION=`check_version`
+    DIST=$(check_dist)
+    VERSION=$(check_version)
     echo "###### Installing dependencies for $DIST"
 
-    if [ "`id -u`" = "0" ]; then
+    if [ "$(id -u)" = "0" ]; then
         Sudo=''
     elif which sudo; then
         Sudo='sudo'
@@ -121,16 +121,16 @@ install_dependencies
 cd /tmp
 
 # Install On-My-Zsh
-if [ ! -d $HOME/.oh-my-zsh ]; then
+if [ ! -d "$HOME"/.oh-my-zsh ]; then
     sh -c "$(curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
 fi
 
 # Generate plugin list
 plugin_list=""
 for plugin in $PLUGINS; do
-    if [ "`echo $plugin | grep -E '^http.*'`" != "" ]; then
-        plugin_name=`basename $plugin`
-        git clone $plugin $HOME/.oh-my-zsh/custom/plugins/$plugin_name
+    if [ "$(echo "$plugin" | grep -E '^http.*')" != "" ]; then
+        plugin_name=$(basename "$plugin")
+        git clone "$plugin" "$HOME"/.oh-my-zsh/custom/plugins/"$plugin_name"
     else
         plugin_name=$plugin
     fi
@@ -138,20 +138,20 @@ for plugin in $PLUGINS; do
 done
 
 # Handle themes
-if [ "`echo $THEME | grep -E '^http.*'`" != "" ]; then
-    theme_repo=`basename $THEME`
+if [ "$(echo "$THEME" | grep -E '^http.*')" != "" ]; then
+    theme_repo=$(basename "$THEME")
     THEME_DIR="$HOME/.oh-my-zsh/custom/themes/$theme_repo"
-    git clone $THEME $THEME_DIR
-    theme_name=`cd $THEME_DIR; ls *.zsh-theme | head -1`
+    git clone "$THEME" "$THEME_DIR"
+    theme_name=$(cd "$THEME_DIR"; ls *.zsh-theme | head -1)
     theme_name="${theme_name%.zsh-theme}"
     THEME="$theme_repo/$theme_name"
 fi
 
 # Generate .zshrc
-zshrc_template "$HOME" "$THEME" "$plugin_list" > $HOME/.zshrc
+zshrc_template "$HOME" "$THEME" "$plugin_list" > "$HOME"/.zshrc
 
 # Install powerlevel10k if no other theme was specified
 if [ "$THEME" = "default" ]; then
-    git clone --depth 1 https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
-    powerline10k_config >> $HOME/.zshrc
+    git clone --depth 1 https://github.com/romkatv/powerlevel10k "$HOME"/.oh-my-zsh/custom/themes/powerlevel10k
+    powerline10k_config >> "$HOME"/.zshrc
 fi
