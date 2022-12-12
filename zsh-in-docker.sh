@@ -152,6 +152,6 @@ zshrc_template "$HOME" "$THEME" "$plugin_list" > $HOME/.zshrc
 
 # Install powerlevel10k if no other theme was specified
 if [ "$THEME" = "default" ]; then
-    git clone https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
+    git clone --depth 1 https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
     powerline10k_config >> $HOME/.zshrc
 fi
