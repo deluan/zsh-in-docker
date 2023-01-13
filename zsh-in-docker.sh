@@ -1,4 +1,25 @@
 #!/bin/sh
+
+#######################################################################################################
+# MIT License (MIT)
+# Copyright 2019 Deluan Quintao
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+# associated documentation files (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge, publish, distribute,
+# sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or
+# substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+# NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+# DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+# OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#######################################################################################################
+
 set -e
 
 THEME=default
@@ -35,23 +56,23 @@ echo
 check_dist() {
     (
         . /etc/os-release
-        echo $ID
+        echo "$ID"
     )
 }
 
 check_version() {
     (
         . /etc/os-release
-        echo $VERSION_ID
+        echo "$VERSION_ID"
     )
 }
 
 install_dependencies() {
-    DIST=`check_dist`
-    VERSION=`check_version`
+    DIST=$(check_dist)
+    VERSION=$(check_version)
     echo "###### Installing dependencies for $DIST"
 
-    if [ "`id -u`" = "0" ]; then
+    if [ "$(id -u)" = "0" ]; then
         Sudo=''
     elif which sudo; then
         Sudo='sudo'
@@ -126,16 +147,16 @@ fi
 cd /tmp
 
 # Install On-My-Zsh
-if [ ! -d $HOME/.oh-my-zsh ]; then
+if [ ! -d "$HOME"/.oh-my-zsh ]; then
     sh -c "$(curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
 fi
 
 # Generate plugin list
 plugin_list=""
 for plugin in $PLUGINS; do
-    if [ "`echo $plugin | grep -E '^http.*'`" != "" ]; then
-        plugin_name=`basename $plugin`
-        git clone $plugin $HOME/.oh-my-zsh/custom/plugins/$plugin_name
+    if [ "$(echo "$plugin" | grep -E '^http.*')" != "" ]; then
+        plugin_name=$(basename "$plugin")
+        git clone "$plugin" "$HOME"/.oh-my-zsh/custom/plugins/"$plugin_name"
     else
         plugin_name=$plugin
     fi
@@ -143,20 +164,20 @@ for plugin in $PLUGINS; do
 done
 
 # Handle themes
-if [ "`echo $THEME | grep -E '^http.*'`" != "" ]; then
-    theme_repo=`basename $THEME`
+if [ "$(echo "$THEME" | grep -E '^http.*')" != "" ]; then
+    theme_repo=$(basename "$THEME")
     THEME_DIR="$HOME/.oh-my-zsh/custom/themes/$theme_repo"
-    git clone $THEME $THEME_DIR
-    theme_name=`cd $THEME_DIR; ls *.zsh-theme | head -1`
+    git clone "$THEME" "$THEME_DIR"
+    theme_name=$(cd "$THEME_DIR"; ls *.zsh-theme | head -1)
     theme_name="${theme_name%.zsh-theme}"
     THEME="$theme_repo/$theme_name"
 fi
 
 # Generate .zshrc
-zshrc_template "$HOME" "$THEME" "$plugin_list" > $HOME/.zshrc
+zshrc_template "$HOME" "$THEME" "$plugin_list" > "$HOME"/.zshrc
 
 # Install powerlevel10k if no other theme was specified
 if [ "$THEME" = "default" ]; then
-    git clone https://github.com/romkatv/powerlevel10k $HOME/.oh-my-zsh/custom/themes/powerlevel10k
-    powerline10k_config >> $HOME/.zshrc
+    git clone --depth 1 https://github.com/romkatv/powerlevel10k "$HOME"/.oh-my-zsh/custom/themes/powerlevel10k
+    powerline10k_config >> "$HOME"/.zshrc
 fi

@@ -1,7 +1,7 @@
 source ./assert.sh
 set -e
 
-trap 'docker-compose stop -t 1' EXIT INT
+trap 'docker compose stop -t 1' EXIT INT
 
 test_suite() {
     image_name=$1
@@ -10,11 +10,11 @@ test_suite() {
     echo
 
     set -x
-    docker-compose rm --force --stop test-$image_name || true
+    docker compose rm --force --stop test-$image_name || true
 
-    docker-compose up -d test-$image_name
-    docker cp zsh-in-docker.sh zsh-in-docker_test-${image_name}_1:/tmp
-    docker exec zsh-in-docker_test-${image_name}_1 sh /tmp/zsh-in-docker.sh \
+    docker compose up -d test-$image_name
+    docker cp zsh-in-docker.sh zsh-in-docker-test-${image_name}-1:/tmp
+    docker exec zsh-in-docker-test-${image_name}-1 sh /tmp/zsh-in-docker.sh \
         -t https://github.com/denysdovhan/spaceship-prompt \
         -p git -p git-auto-fetch \
         -p https://github.com/zsh-users/zsh-autosuggestions \
@@ -24,8 +24,8 @@ test_suite() {
     set +x
 
     echo
-    VERSION=$(docker exec zsh-in-docker_test-${image_name}_1 zsh --version)
-    ZSHRC=$(docker exec zsh-in-docker_test-${image_name}_1 cat /root/.zshrc)
+    VERSION=$(docker exec zsh-in-docker-test-${image_name}-1 zsh --version)
+    ZSHRC=$(docker exec zsh-in-docker-test-${image_name}-1 cat /root/.zshrc)
     echo "########################################################################################"
     echo "$ZSHRC"
     echo "########################################################################################"
@@ -40,7 +40,7 @@ test_suite() {
     echo
     echo "######### Success! All tests are passing for ${image_name}"
 
-    docker-compose stop -t 1 test-$image_name
+    docker compose stop -t 1 test-$image_name
 }
 
 images=${*:-"alpine ubuntu ubuntu-14.04 debian amazonlinux"}
