@@ -25,14 +25,17 @@ set -e
 THEME=default
 PLUGINS=""
 ZSHRC_APPEND=""
+INSTALL_DEPENDENCIES=true
 
-while getopts ":t:p:a:" opt; do
+while getopts ":t:p:a:x" opt; do
     case ${opt} in
         t)  THEME=$OPTARG
             ;;
         p)  PLUGINS="${PLUGINS}$OPTARG "
             ;;
         a)  ZSHRC_APPEND="$ZSHRC_APPEND\n$OPTARG"
+            ;;
+        x)  INSTALL_DEPENDENCIES=false
             ;;
         \?)
             echo "Invalid option: $OPTARG" 1>&2
@@ -137,7 +140,9 @@ POWERLEVEL9K_STATUS_CROSS=true
 EOM
 }
 
-install_dependencies
+if [ "$INSTALL_DEPENDENCIES" = true ]; then
+    install_dependencies
+fi
 
 cd /tmp
 
