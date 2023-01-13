@@ -18,7 +18,7 @@ One line installation: add the following line in your `Dockerfile`:
 
 ```Dockerfile
 # Default powerline10k theme, no plugins installed
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)"
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)"
 ```
 
 #### Optional arguments:
@@ -33,9 +33,12 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 - `-a <line>` - You can add extra lines at the end of the generated `.zshrc` (but before loading oh-my-zsh) by 
   passing one `-a` argument for each line you want to add. This is useful to customize plugins or themes. 
   For example, if you want to enable [case sensitive completion](https://stackoverflow.com/a/28021691):
-  
+- `-x` - Skip installation of dependencies: `zsh`, `git`, `curl`. If you are having issues with the script failing to
+  install these dependencies due to sudo permissions, you can install them yourself in a prior step, and use this flag
+  to make the script skip their installation
+
   ```Dockerfile
-  RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)" -- \
+  RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
   -a 'CASE_SENSITIVE="true"'
   ```
 
@@ -43,13 +46,13 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 ```Dockerfile
 # Uses "robbyrussell" theme (original Oh My Zsh theme), with no plugins
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
     -t robbyrussell
 ```
 
 ```Dockerfile
 # Uses "git", "ssh-agent" and "history-substring-search" bundled plugins
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
     -p git -p ssh-agent -p 'history-substring-search' \
     -a 'bindkey "\$terminfo[kcuu1]" history-substring-search-up' \
     -a 'bindkey "\$terminfo[kcud1]" history-substring-search-down'
@@ -58,7 +61,7 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 ```Dockerfile
 # Uses "Spaceship" theme with some customization. Uses some bundled plugins and installs some more from github
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.4/zsh-in-docker.sh)" -- \
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
     -t https://github.com/denysdovhan/spaceship-prompt \
     -a 'SPACESHIP_PROMPT_ADD_NEWLINE="false"' \
     -a 'SPACESHIP_PROMPT_SEPARATE_LINE="false"' \
@@ -74,8 +77,8 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 - This scripts requires `git` and `curl` to work properly. If your `Dockerfile` uses `root` as the
   main user, it should be fine, as the script will install them automatically. If you are using a
   non-root user, make sure to install the `sudo` package _OR_ to install `git` and `curl` packages
-  _before_ calling this script. In case `sudo` access is an issue and you already have `git` and
-  `curl`, you can use the option `-x` to skip the installations.
+  _before_ calling this script. In case `sudo` access is an issue and you already have `zsh`, `git` 
+  and `curl`, you can use the option `-x` to skip the installations.
 - By default this script will install the `powerlevel10k` theme, as it is one of the fastest and most
   customizable themes available for zsh. If you want the default Oh My Zsh theme, use the option
   `-t robbyrussell`
