@@ -1,7 +1,7 @@
 # Oh My Zsh Installer for Docker
 
 [![Last Release](https://img.shields.io/github/v/release/deluan/zsh-in-docker?label=latest&style=flat-square)](https://github.com/deluan/zsh-in-docker/releases/latest)
-[![Build](https://img.shields.io/github/workflow/status/deluan/zsh-in-docker/CI?style=flat-square)](https://github.com/deluan/zsh-in-docker/actions)
+[![Build](https://img.shields.io/github/actions/workflow/status/deluan/zsh-in-docker/test.yml?branch=master&style=flat-square)](https://github.com/deluan/zsh-in-docker/actions)
 [![Downloads](https://img.shields.io/github/downloads/deluan/zsh-in-docker/total?style=flat-square)](https://github.com/deluan/zsh-in-docker/releases)
 
 
