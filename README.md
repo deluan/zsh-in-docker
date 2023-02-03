@@ -33,14 +33,16 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 - `-a <line>` - You can add extra lines at the end of the generated `.zshrc` (but before loading oh-my-zsh) by 
   passing one `-a` argument for each line you want to add. This is useful to customize plugins or themes. 
   For example, if you want to enable [case sensitive completion](https://stackoverflow.com/a/28021691):
-- `-x` - Skip installation of dependencies: `zsh`, `git`, `curl`. If you are having issues with the script failing to
-  install these dependencies due to sudo permissions, you can install them yourself in a prior step, and use this flag
-  to make the script skip their installation
 
   ```Dockerfile
   RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- \
   -a 'CASE_SENSITIVE="true"'
   ```
+
+- `-x` - Skip installation of dependencies: `zsh`, `git`, `curl`. If you are having issues with the script failing to
+  install these dependencies due to sudo permissions, you can install them yourself in a prior step, and use this flag
+  to make the script skip their installation
+
 
 #### Examples:
 
