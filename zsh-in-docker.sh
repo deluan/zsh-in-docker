@@ -94,6 +94,10 @@ install_dependencies() {
             $Sudo yum install -y git zsh
             $Sudo yum install -y ncurses-compat-libs # this is required for AMZN Linux (ref: https://github.com/emqx/emqx/issues/2503)
         ;;
+        rhel|fedora|centos|rocky)
+            $Sudo yum update -y
+            $Sudo yum install -y git zsh
+        ;;
         *)
             $Sudo apt-get update
             $Sudo apt-get -y install git curl zsh locales
