@@ -31,3 +31,23 @@ services:
     image: amazonlinux:latest
     entrypoint: /bin/sh
     command: -c "while sleep 1000; do :; done"
+
+  test-centos7:
+    image: centos:7
+    entrypoint: /bin/sh
+    command: -c "while sleep 1000; do :; done"
+
+  test-rockylinux8:
+    image: rockylinux:8
+    entrypoint: /bin/sh
+    command: -c "while sleep 1000; do :; done"
+
+  test-rockylinux9:
+    image: rockylinux:9
+    entrypoint: /bin/sh
+    command: -c "while sleep 1000; do :; done"
+
+  test-fedora:
+    image: fedora:latest
+    entrypoint: /bin/sh
+    command: -c "while sleep 1000; do :; done"
