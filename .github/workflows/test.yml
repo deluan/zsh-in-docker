@@ -8,35 +8,14 @@ on:
       - master
   schedule:
     - cron: "0 5 * * 2"
-    
+
 jobs:
-  test-ubuntu:
-    runs-on: ubuntu-latest
+  test:
+    strategy:
+      matrix:
+        image: [ ubuntu, ubuntu-14.04, alpine, debian, amazonlinux, centos7, rockylinux8, rockylinux9, fedora]
+    runs-on: ${{ matrix.image }}
     steps:
-      - uses: actions/checkout@v1
-      - name: Test in Ubuntu
-        run: ./test.sh ubuntu
-  test-ubuntu-14-04:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Test in Ubuntu 14.04
-        run: ./test.sh ubuntu-14.04      
-  test-alpine:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Test in Alpine
-        run: ./test.sh alpine
-  test-debian:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Test in Debian
-        run: ./test.sh debian
-  test-amazonlinux:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Test in Amazonlinux
-        run: ./test.sh amazonlinux
+      - uses: actions/checkout@v4
+      - name: Test in ${{ matrix.image }}
+        run: ./test.sh ${{ matrix.image }}
