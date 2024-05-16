@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         image: [ ubuntu, ubuntu-14.04, alpine, debian, amazonlinux, centos7, rockylinux8, rockylinux9, fedora]
-    runs-on: ${{ matrix.image }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Test in ${{ matrix.image }}
