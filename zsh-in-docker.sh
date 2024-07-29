@@ -167,7 +167,7 @@ cd /tmp
 
 # Install On-My-Zsh
 if [ ! -d "$TARGET_HOME/.oh-my-zsh" ]; then
-    su - $TARGET_USER -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended'
+    su - $TARGET_USER -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended'
 fi
 
 # Generate plugin list
