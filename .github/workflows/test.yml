@@ -13,7 +13,7 @@ jobs:
   test:
     strategy:
       matrix:
-        image: [ ubuntu, ubuntu-14.04, alpine, debian, amazonlinux, centos7, rockylinux8, rockylinux9, fedora]
+        image: [ ubuntu, ubuntu-14.04, alpine, debian, amazonlinux, rockylinux8, rockylinux9, fedora]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
