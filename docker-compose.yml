@@ -31,11 +31,6 @@ services:
     entrypoint: /bin/sh
     command: -c "while sleep 1000; do :; done"
 
-  test-centos7:
-    image: centos:7
-    entrypoint: /bin/sh
-    command: -c "while sleep 1000; do :; done"
-
   test-rockylinux8:
     image: rockylinux:8
     entrypoint: /bin/sh

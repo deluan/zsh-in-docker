@@ -6,7 +6,7 @@
 
 
 This is a script to automate [Oh My Zsh](https://ohmyz.sh/) installation in development containers.
-Works with any image based on Alpine, Ubuntu, Debian, Amazon Linux, CentOS 7, RockyLinux 8,9 and Fedora.
+Works with any image based on Alpine, Ubuntu, Debian, Amazon Linux, RockyLinux 8,9 and Fedora.
 
 The original goal was to simplify setting up `zsh` and Oh My Zsh in a Docker image for use with [VSCode's Remote Containers
 extension](https://code.visualstudio.com/docs/remote/containers), but it can be used whenever you
