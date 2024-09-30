@@ -38,7 +38,7 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.2.1/zsh-in-docker.sh)" -- \
   -a 'CASE_SENSITIVE="true"'
   ```
-
+- `-u <username>` - You can install zsh in a specified user's directory, for example if you want zsh to be installed but the user not to have access to privleges that the root user has.
 - `-x` - Skip installation of dependencies: `zsh`, `git`, `curl`. If you are having issues with the script failing to
   install these dependencies due to sudo permissions, you can install them yourself in a prior step, and use this flag
   to make the script skip their installation
@@ -50,6 +50,13 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 # Uses "robbyrussell" theme (original Oh My Zsh theme), with no plugins
 RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.2.1/zsh-in-docker.sh)" -- \
     -t robbyrussell
+```
+
+```Dockerfile
+# Same command as above, but installs zsh for specified user: dockeruser
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.2.0/zsh-in-docker.sh)" -- \
+    -t robbyrussell \
+    -u dockeruser
 ```
 
 ```Dockerfile

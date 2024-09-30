@@ -26,8 +26,9 @@ THEME=default
 PLUGINS=""
 ZSHRC_APPEND=""
 INSTALL_DEPENDENCIES=true
+TARGET_USER=$(whoami)  # Default to current user
 
-while getopts ":t:p:a:x" opt; do
+while getopts ":t:p:a:xu:" opt; do
     case ${opt} in
         t)  THEME=$OPTARG
             ;;
@@ -36,6 +37,8 @@ while getopts ":t:p:a:x" opt; do
         a)  ZSHRC_APPEND="$ZSHRC_APPEND\n$OPTARG"
             ;;
         x)  INSTALL_DEPENDENCIES=false
+            ;;
+        u)  TARGET_USER=$OPTARG
             ;;
         \?)
             echo "Invalid option: $OPTARG" 1>&2
@@ -47,8 +50,20 @@ while getopts ":t:p:a:x" opt; do
 done
 shift $((OPTIND -1))
 
+# Get the target user's home directory
+if [ "$TARGET_USER" = "root" ]; then
+    TARGET_HOME=$HOME
+else
+    TARGET_HOME=$(getent passwd "$TARGET_USER" | cut -d: -f6)
+fi
+
+if [ -z "$TARGET_HOME" ]; then
+    echo "Error: Unable to determine home directory for user $TARGET_USER"
+    exit 1
+fi
+
 echo
-echo "Installing Oh-My-Zsh with:"
+echo "Installing Oh-My-Zsh for user $TARGET_USER with:"
 echo "  THEME   = $THEME"
 echo "  PLUGINS = $PLUGINS"
 echo
@@ -150,9 +165,14 @@ fi
 
 cd /tmp
 
-# Install On-My-Zsh
-if [ ! -d "$HOME"/.oh-my-zsh ]; then
-    sh -c "$(curl https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
+# Install Oh My Zsh
+if [ ! -d "$TARGET_HOME/.oh-my-zsh" ]; then
+    su - $TARGET_USER -c '
+        export HOME="'"$TARGET_HOME"'"
+        export USER="'"$TARGET_USER"'"
+        export ZDOTDIR="$HOME"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    '
 fi
 
 # Generate plugin list
@@ -160,7 +180,7 @@ plugin_list=""
 for plugin in $PLUGINS; do
     if [ "$(echo "$plugin" | grep -E '^http.*')" != "" ]; then
         plugin_name=$(basename "$plugin")
-        git clone "$plugin" "$HOME"/.oh-my-zsh/custom/plugins/"$plugin_name"
+        su - $TARGET_USER -c "git clone '$plugin' '$TARGET_HOME/.oh-my-zsh/custom/plugins/$plugin_name'"
     else
         plugin_name=$plugin
     fi
@@ -170,18 +190,19 @@ done
 # Handle themes
 if [ "$(echo "$THEME" | grep -E '^http.*')" != "" ]; then
     theme_repo=$(basename "$THEME")
-    THEME_DIR="$HOME/.oh-my-zsh/custom/themes/$theme_repo"
-    git clone "$THEME" "$THEME_DIR"
-    theme_name=$(cd "$THEME_DIR"; ls *.zsh-theme | head -1)
+    THEME_DIR="$TARGET_HOME/.oh-my-zsh/custom/themes/$theme_repo"
+    su - $TARGET_USER -c "git clone '$THEME' '$THEME_DIR'"
+    theme_name=$(su - $TARGET_USER -c "cd '$THEME_DIR' && ls *.zsh-theme | head -1")
     theme_name="${theme_name%.zsh-theme}"
     THEME="$theme_repo/$theme_name"
 fi
 
 # Generate .zshrc
-zshrc_template "$HOME" "$THEME" "$plugin_list" > "$HOME"/.zshrc
+zshrc_template "$TARGET_HOME" "$THEME" "$plugin_list" > "$TARGET_HOME/.zshrc"
+chown $TARGET_USER:$TARGET_USER "$TARGET_HOME/.zshrc"
 
 # Install powerlevel10k if no other theme was specified
 if [ "$THEME" = "default" ]; then
-    git clone --depth 1 https://github.com/romkatv/powerlevel10k "$HOME"/.oh-my-zsh/custom/themes/powerlevel10k
-    powerline10k_config >> "$HOME"/.zshrc
+    su - $TARGET_USER -c "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git '$TARGET_HOME/.oh-my-zsh/custom/themes/powerlevel10k'"
+    powerline10k_config >> "$TARGET_HOME/.zshrc"
 fi
