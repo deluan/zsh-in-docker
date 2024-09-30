@@ -121,7 +121,7 @@ zshrc_template() {
 export LANG='en_US.UTF-8'
 export LANGUAGE='en_US:en'
 export LC_ALL='en_US.UTF-8'
-export TERM=xterm
+[ -z "$TERM" ] && export TERM=xterm
 
 ##### Zsh/Oh-my-Zsh Configuration
 export ZSH="$_HOME/.oh-my-zsh"
